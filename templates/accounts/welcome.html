@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="relative flex min-h-screen w-full flex-col overflow-hidden">
+
+  <!-- Background images -->
+  <div class="absolute inset-0 z-0 opacity-10 dark:opacity-5">
+    <div class="grid grid-cols-2 grid-rows-2 gap-4 h-full w-full">
+      <div class="col-span-1 row-span-1 bg-center bg-no-repeat bg-cover rounded-xl"
+        style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwnztToGDvtHv3DWOyLp3qDE_0v-Vx4Dqys5TlBTfZJsCJdvKqBFujo2TwRuqtw-0ImwZnTgVCwIRIDMEy4X_oyvbUrcuiKfMLObWZ247puxTGVeEYX_8T40I2hhzTn0nYd8GJAkdhWYGv8UhlmpFWJwAVrxnIOUCt2PxQKQGAt1m4Zz_1l2g6ZPDpIBrdCcF15klOMiSN8Ajf6MXlE2pvBApsW24Xd6gG76nHePs0O5Orp3nnL9JKd-wDUUiKpc72eNMf9VjhTJg');">
+      </div>
+      <div class="col-span-1 row-span-2 bg-center bg-no-repeat bg-cover rounded-xl"
+        style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfb7CSbPVmMaWGCrKQhl9ut5FkBPNrf8h9sUgImNN7jgEvJDxIjlZUP8qVZ4UPXQh9ya9A0v18wyGHYMFQFHBu8BjtHD6wIxT8ApS5JV4WG2HiPcifOF8IG76fvrLUR7xpowJXRllClahb_ZRvJ788ZWX6hUjAxesZ6r0PlGK3Rvdb18SpvJm6ONI34p2J6t-O0xUP0xTUVWuY0so3BHS1byWWIjWRXqS5__JAfHc3CS19JrE775_SF6pxab6SXGrGQESgjAcIF2Y');">
+      </div>
+      <div class="col-span-1 row-span-1 bg-center bg-no-repeat bg-cover rounded-xl"
+        style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsluGKbZFWc2dCjC9R03St3VoDE24EcqwRkdz3ucSweCByI4B6oQQoigLTcUiGxs2mTNOxm4mW5_af30iWQHr_ufHR0LW1LUi143jgrWrZ6XrGRJqAH8z5292kWAVGgvjwDBWDGXWxkqNB83qlvjUuxRYIETUJwFR7uL_QNy2DA3L-oeSHJEZiz-NOgP8nznRTT88RyezHSlAmMqYegxWGBQBxVzTCc9Wk0Ovf0ZVIkFU1dBKuhWyJ_VS7m8wcraA58Zhvb-Y3S5M');">
+      </div>
+    </div>
+  </div>
+
+  <main class="flex flex-1 items-center justify-center relative z-10 p-8">
+    <div class="w-full max-w-md flex flex-col gap-10">
+
+      <!-- Logo -->
+      <div class="flex items-center justify-center gap-3">
+        <h2 class="text-2xl font-bold">Needly</h2>
+      </div>
+
+      <!-- Headline -->
+      <div class="text-center">
+        <h1 class="text-4xl font-black tracking-tight">
+          All your daily needs, one tap away.
+        </h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-300">
+          Book trusted professionals for beauty, home, pet care, and more.
+        </p>
+      </div>
+
+      <!-- ACTION BUTTONS (DYNAMIC) -->
+      <div class="flex flex-col gap-4">
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'home' %}" class="h-12 flex items-center justify-center rounded-lg bg-primary text-white font-bold">
+            Browse Services
+          </a>
+          <a href="{% url 'my_bookings' %}" class="h-12 flex items-center justify-center rounded-lg border font-bold">
+            My Bookings
+          </a>
+        {% else %}
+          <a href="{% url 'signup' %}" class="h-12 flex items-center justify-center rounded-lg bg-primary text-white font-bold">
+            Sign Up for Free
+          </a>
+          <a href="{% url 'login' %}" class="h-12 flex items-center justify-center rounded-lg border font-bold">
+            Login
+          </a>
+        {% endif %}
+
+      </div>
+
+      <!-- Social login (disabled UI) -->
+      <p class="text-center text-sm text-gray-500">
+        Social login coming soon
+      </p>
+
+    </div>
+  </main>
+
+</div>
+{% endblock %}

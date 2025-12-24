@@ -1,0 +1,106 @@
+{% load static %}
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Needly</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#48BDB8",
+            "background-light": "#F9F9F9",
+            "background-dark": "#111c21",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"]
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "1rem",
+            xl: "1.5rem",
+            full: "9999px"
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark text-[#2F4F4F] dark:text-gray-200">
+
+  <!-- ✅ NAVBAR (ONLY FOR LOGGED-IN USERS) -->
+  {% if user.is_authenticated %}
+  <header class="sticky top-0 z-20 w-full border-b bg-white dark:bg-background-dark">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-2">
+        <div class="h-8 w-8 text-primary">
+          <svg fill="currentColor" viewBox="0 0 48 48">
+            <path d="M42.1739 20.1739L27.8261 5.82609L20.1739 42.1739Z"></path>
+          </svg>
+        </div>
+        <span class="text-xl font-bold">Needly</span>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex items-center gap-2">
+        <a href="{% url 'home' %}"
+           class="flex items-center gap-2 rounded-lg bg-primary/10 px-4 py-2 text-sm font-bold text-primary">
+          <span class="material-symbols-outlined text-base">home</span>
+          Home
+        </a>
+
+        <a href="{% url 'my_bookings' %}"
+           class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100">
+          <span class="material-symbols-outlined text-base">calendar_today</span>
+          My Bookings
+        </a>
+      </nav>
+
+      <!-- User -->
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/20 text-primary font-bold">
+            {{ user.username|first|upper }}
+          </div>
+          <span class="hidden sm:block text-sm font-medium">
+            {{ user.username }}
+          </span>
+        </div>
+
+        <a href="{% url 'logout' %}"
+           class="text-sm font-medium text-red-500 hover:underline">
+          Logout
+        </a>
+      </div>
+
+    </div>
+  </header>
+  {% endif %}
+
+  <!-- PAGE CONTENT -->
+  <main class="min-h-screen">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

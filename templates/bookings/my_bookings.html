@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-6 py-10">
+  <div class="mx-auto max-w-5xl">
+
+    <h1 class="mb-8 text-3xl font-bold">
+      My Bookings
+    </h1>
+
+    {% if bookings %}
+      <div class="space-y-6">
+
+        {% for booking in bookings %}
+        <div class="flex flex-col gap-4 rounded-xl border bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+
+          <!-- Left -->
+          <div>
+            <h3 class="text-lg font-bold">
+              {{ booking.service.name }}
+            </h3>
+
+            <p class="mt-1 text-sm text-gray-600">
+              {{ booking.date }} · {{ booking.time }}
+            </p>
+
+            <p class="mt-1 text-sm text-gray-500">
+              {{ booking.address }}
+            </p>
+          </div>
+
+          <!-- Right -->
+          <div class="flex flex-col items-start gap-3 sm:items-end">
+
+            <!-- Status Badge -->
+            {% if booking.status == "pending" %}
+              <span class="rounded-full bg-yellow-100 px-4 py-1 text-sm font-bold text-yellow-700">
+                Pending
+              </span>
+            {% elif booking.status == "confirmed" %}
+              <span class="rounded-full bg-blue-100 px-4 py-1 text-sm font-bold text-blue-700">
+                Confirmed
+              </span>
+            {% elif booking.status == "completed" %}
+              <span class="rounded-full bg-green-100 px-4 py-1 text-sm font-bold text-green-700">
+                Completed
+              </span>
+            {% else %}
+              <span class="rounded-full bg-red-100 px-4 py-1 text-sm font-bold text-red-700">
+                Cancelled
+              </span>
+            {% endif %}
+
+            <!-- Action -->
+            {% if booking.status == "pending" %}
+            <form method="POST" action="{% url 'cancel_booking' booking.id %}">
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="text-sm font-bold text-red-500 hover:underline">
+                Cancel booking
+              </button>
+            </form>
+            {% endif %}
+
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    {% else %}
+      <div class="rounded-xl border bg-white p-10 text-center text-gray-500">
+        You don’t have any bookings yet.
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin – Bookings</title>
+</head>
+<body>
+<p>
+  <a href="?">All</a> |
+  <a href="?status=pending">Pending</a> |
+  <a href="?status=confirmed">Confirmed</a> |
+  <a href="?status=completed">Completed</a> |
+  <a href="?status=cancelled">Cancelled</a>
+</p>
+
+<h1>Admin Booking Dashboard</h1>
+
+<table border="1" cellpadding="10">
+  <tr>
+    <th>ID</th>
+    <th>User</th>
+    <th>Service</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+
+  {% for booking in bookings %}
+  <tr>
+    <td>{{ booking.id }}</td>
+    <td>{{ booking.user.username }}</td>
+    <td>{{ booking.service.name }}</td>
+    <td>{{ booking.date }}</td>
+    <td>{{ booking.status }}</td>
+    <td>
+      {% if booking.status == "pending" %}
+        <a href="{% url 'update_booking_status' booking.id 'confirmed' %}">Confirm</a>
+        |
+        <a href="{% url 'update_booking_status' booking.id 'cancelled' %}">Cancel</a>
+      {% elif booking.status == "confirmed" %}
+        <a href="{% url 'update_booking_status' booking.id 'completed' %}">Complete</a>
+      {% else %}
+        —
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

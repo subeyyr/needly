@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-10 py-8">
+  <div class="mx-auto max-w-4xl">
+
+    <div class="rounded-xl border bg-white p-8 shadow-soft">
+
+      <h1 class="text-3xl font-bold text-center">
+        Book Your Appointment
+      </h1>
+
+      <p class="mt-2 text-center text-gray-600">
+        Confirm the details for {{ service.name }}
+      </p>
+
+      <div class="my-8 h-px bg-brand-neutral-border"></div>
+
+      <form method="POST" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- Date -->
+        <div>
+          <label class="block mb-2 font-medium">Preferred Date</label>
+          <input
+            type="date"
+            name="date"
+            required
+            class="w-full rounded-lg border px-4 py-3">
+        </div>
+
+        <!-- Time -->
+        <div>
+          <label class="block mb-2 font-medium">Preferred Time</label>
+          <input
+            type="time"
+            name="time"
+            required
+            class="w-full rounded-lg border px-4 py-3">
+        </div>
+
+        <!-- Address -->
+        <div>
+          <label class="block mb-2 font-medium">Service Address</label>
+          <textarea
+            name="address"
+            rows="3"
+            required
+            placeholder="Enter service address"
+            class="w-full rounded-lg border px-4 py-3"></textarea>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <label class="block mb-2 font-medium">Phone Number</label>
+          <input
+            type="text"
+            name="phone"
+            required
+            placeholder="Enter phone number"
+            class="w-full rounded-lg border px-4 py-3">
+        </div>
+
+        <!-- Summary -->
+        <div class="flex items-center justify-between rounded-lg border p-4 bg-brand-neutral-bg">
+          <div>
+            <p class="font-bold">{{ service.name }}</p>
+            <p class="text-sm text-gray-600">{{ service.category.name }}</p>
+          </div>
+          <p class="text-xl font-bold text-brand-primary">
+            ₹{{ service.price }}
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-4 pt-4">
+          <a href="{% url 'service_detail' service.id %}"
+             class="flex-1 rounded-lg border px-6 py-3 text-center font-bold hover:bg-gray-100">
+            Cancel
+          </a>
+
+          <button
+  type="submit"
+  class="flex-1 rounded-lg bg-primary px-6 py-3 font-bold text-white hover:bg-primary/90">
+  Confirm Booking
+</button>
+
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

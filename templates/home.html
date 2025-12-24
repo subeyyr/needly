@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-start px-6 py-10 bg-background-light dark:bg-background-dark">
+
+  <!-- HERO -->
+  <section class="flex flex-col items-center text-center gap-4 max-w-3xl">
+    <h1 class="text-4xl md:text-5xl font-black tracking-tight">
+      Simplify your day
+    </h1>
+    <p class="text-gray-600 dark:text-gray-300 max-w-xl">
+      Book appointments for beauty, home services, pet care, and more.
+      All your everyday needs in one place.
+    </p>
+  </section>
+<form method="GET" action="{% url 'service_search' %}"
+      class="mt-6 w-full max-w-2xl">
+  <div class="flex rounded-xl bg-white shadow-sm border">
+    <span class="flex items-center px-4 text-gray-400">
+      <span class="material-symbols-outlined">search</span>
+    </span>
+    <input
+      type="text"
+      name="q"
+      placeholder="What do you need today?"
+      class="flex-1 h-14 px-2 focus:outline-none"
+      required
+    />
+    <button
+      type="submit"
+      class="m-2 px-6 rounded-lg bg-primary text-white font-bold hover:bg-primary/90">
+      Search
+    </button>
+  </div>
+</form>
+
+  <!-- CATEGORIES -->
+  <section class="w-full max-w-5xl mt-12">
+    <h2 class="text-2xl font-bold mb-6">
+      Explore Our Services
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      {% for category in categories %}
+      <a href="{% url 'category_services' category.slug %}"
+         class="group flex flex-col items-center gap-4 rounded-xl border border-gray-200 bg-white dark:bg-gray-900 p-6 text-center shadow-sm transition-all hover:scale-105 hover:shadow-lg">
+
+        <!-- ICON (generic for now) -->
+        <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/20 text-primary">
+          <span class="material-symbols-outlined text-3xl">
+            category
+          </span>
+        </div>
+
+        <div class="flex flex-col">
+          <h3 class="text-lg font-bold">
+            {{ category.name }}
+          </h3>
+          <p class="text-sm text-gray-500">
+            Explore {{ category.name }} services
+          </p>
+        </div>
+
+      </a>
+      {% empty %}
+      <p class="text-gray-500">
+        No categories available right now.
+      </p>
+      {% endfor %}
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}
